@@ -32,6 +32,13 @@ app.use(passport.session());
 //static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+//set routes
+const users = require('./routes/users');
+const posts = require('./routes/posts');
+
+app.use('/users', users);
+app.use('/posts', posts);
+
 //set index route
 app.get('/', (req, res) => {
   res.send('Hello World!');
