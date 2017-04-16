@@ -20,6 +20,12 @@ const PostSchema = mongoose.Schema({
     type: Date,
     default: Date.now
   },
+  comments: [
+    {
+      body: String,
+      date: Date
+    }
+  ],
   url: {
     type: String,
     required: true
@@ -35,4 +41,11 @@ module.exports.getPostByUrl = function(url, callback) {
 
 module.exports.addPost = function(post, callback) {
   post.save(callback);
+}
+
+module.exports.getRecentPosts = function(callback) {
+  Post.find().
+  limit(3).
+  sort({ date: -1 }).
+  exec(callback);
 }

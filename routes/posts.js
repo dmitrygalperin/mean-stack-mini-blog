@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
 
 const Post = require('../models/post');
 
-router.post('/new', (req, res, next) => {
+//protected route
+router.post('/new', passport.authenticate('jwt', {session: false}), (req, res, next) => {
   let post = new Post({
     title: req.body.title,
     body: req.body.body,
@@ -15,25 +18,37 @@ router.post('/new', (req, res, next) => {
     if(err) {
       res.json({success: false, msg: 'Failed to add post.'});
     } else {
-      res.json({success: true, msg: 'Post added successfuly.'});
-    }
-  });
-});
-
-router.post('/:post_url', (req, res, next) => {
-  const url = req.params.post_url;
-
-  Post.getPostByUrl(url, (err, post) => {
-    if(post) {
-      res.json(post);
-    } else {
-      res.json({success: false, msg:'Post not found.'});
+      res.json({success: true, msg: 'Post added successfully.'});
     }
   });
 });
 
 router.get('/recent', (req, res, next) => {
-  res.send('RECENT POSTS');
-})
+  Post.getRecentPosts((err, posts) => {
+    if(posts) {
+      res.json({
+        success: true,
+        posts: posts
+      })
+    } else {
+      res.json({success: false, msg:'Could not get recent posts.'});
+    }
+  });
+});
+
+router.get('/:post_url', (req, res, next) => {
+  const url = req.params.post_url;
+
+  Post.getPostByUrl(url, (err, post) => {
+    if(post) {
+      res.json({
+        success: true,
+        post: post
+      });
+    } else {
+      res.json({success: false, msg:'Post not found.'});
+    }
+  });
+});
 
 module.exports = router;
