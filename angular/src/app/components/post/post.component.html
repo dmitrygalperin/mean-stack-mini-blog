@@ -1,0 +1,18 @@
+<div class="row">
+  <div *ngIf="post" class="col-sm-11 blog-main">
+    <div class="blog-post">
+      <h2 class="blog-post-title">{{ post.title }}</h2>
+      <p class="blog-post-meta">{{ post.date | date:'medium' }} by
+        <a href="#">{{ post.author }}</a></p>
+      <p>{{ post.body }}</p>
+      <button type="button" class="btn btn-xs btn-primary">Comment</button>
+      <div *ngFor="let comment of post.comments" class="well">
+        <h5>{{ comment.date }}</h5>
+        <p>{{ comment.body }}</p>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!post" class="col-sm-11 blog-main">
+    The requested post does not exist.
+  </div>
+</div>

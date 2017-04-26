@@ -1,0 +1,10 @@
+screen -t "WORKSPACE"
+split -v
+focus next
+screen -t "EXPRESS"
+stuff "nodemon -L^M"
+split
+focus next
+screen -t "ANGULAR"
+stuff "cd angular/src; ng serve --host 0.0.0.0^M"
+focus next

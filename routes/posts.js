@@ -16,6 +16,7 @@ router.post('/new', passport.authenticate('jwt', {session: false}), (req, res, n
 
   Post.addPost(post, (err, post) => {
     if(err) {
+      console.log(err);
       res.json({success: false, msg: 'Failed to add post.'});
     } else {
       res.json({success: true, msg: 'Post added successfully.'});

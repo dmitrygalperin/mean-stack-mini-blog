@@ -36,9 +36,10 @@ router.post('/authenticate', (req, res, next) => {
       if(err) throw err;
       if(isMatch) {
         const token = jwt.sign(user, config.secret, {
-          expiresIn: 1000*60*60*24
+          expiresIn: 604800
         });
 
+        console.log(token);
         res.json({
           success: true,
           token: "JWT " + token,
@@ -53,6 +54,19 @@ router.post('/authenticate', (req, res, next) => {
       }
     })
   })
+});
+
+router.post('/verifylogin', (req, res, next) => {
+  const id = req.body.id;
+
+  User.getUserById(id, (err, user) => {
+    if(err) return res.json({success: false, msg: 'An error has occurred.'});
+    if(user) {
+      return res.json({success: true, user: user});
+    } else {
+      return res.json({success: false, msg: 'Invalid session. Please log in.'});
+    }
+  });
 });
 
 module.exports = router;

@@ -1,0 +1,36 @@
+<h1 class="blog-title">MEAN Stack Mini Blog</h1>
+<p class="lead blog-description">
+  A mini blog application built on the MEAN Stack.
+</p>
+<div class="row">
+  <div class="col-sm-8 blog-main">
+    <div *ngFor="let post of posts" class="blog-post">
+      <h2 class="blog-post-title">{{ post.title }}</h2>
+      <p class="blog-post-meta">{{ post.date | date:'medium' }} by
+        <a href="#">{{ post.author }}</a> | <a [routerLink]="['/posts', post.url]">Permalink</a></p>
+      <p>{{ post.body }}</p>
+      <button type="button" class="btn btn-xs btn-primary">Comment</button>
+      <div *ngFor="let comment of post.comments" class="well">
+        <h5>{{ comment.date }}</h5>
+        <p>{{ comment.body }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+    <div class="sidebar-module">
+      <h4>Recent Posts</h4>
+      <ol class="list-unstyled">
+        <li *ngFor="let post of posts">
+          <a [routerLink]="['/posts', post.url]">{{ post.title }}</a>
+        </li>
+      </ol>
+    </div>
+    <div class="sidebar-module">
+      <h4>External Links</h4>
+      <ol class="list-unstyled">
+        <li><a href="#">GitHub</a></li>
+        <li><a href="#">Facebook</a></li>
+      </ol>
+    </div>
+  </div><!-- /.blog-sidebar -->
+</div>
