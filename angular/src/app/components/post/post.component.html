@@ -4,7 +4,7 @@
       <h2 class="blog-post-title">{{ post.title }}</h2>
       <p class="blog-post-meta">{{ post.date | date:'medium' }} by
         <a href="#">{{ post.author }}</a></p>
-      <p>{{ post.body }}</p>
+      <div [innerHTML]="post.body"></div>
       <button type="button" class="btn btn-xs btn-primary">Comment</button>
       <div *ngFor="let comment of post.comments" class="well">
         <h5>{{ comment.date }}</h5>

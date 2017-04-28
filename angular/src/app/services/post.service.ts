@@ -26,7 +26,6 @@ export class PostService {
     this.authService.loadToken();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', this.authService.authToken);
-    console.log(headers);
     return this.http.post('http://localhost:3000/posts/new', post, {headers})
       .map(res => res.json());
   }

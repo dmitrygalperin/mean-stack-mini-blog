@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -21,6 +21,7 @@ import { ValidateService } from './services/validate.service';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 
 import { AuthGuard } from './guards/auth.guard';
+import { SimpleTinyComponent } from './components/new-post/simple-tiny/simple-tiny.component';
 
 
 const appRoutes: Routes = [
@@ -47,14 +48,16 @@ const appRoutes: Routes = [
     AboutComponent,
     ContactComponent,
     NewPostComponent,
-    PostComponent
+    PostComponent,
+    SimpleTinyComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     RouterModule.forRoot(appRoutes),
-    FlashMessagesModule
+    FlashMessagesModule,
+    ReactiveFormsModule
   ],
   providers: [PostService, AuthService, ValidateService, AuthGuard],
   bootstrap: [AppComponent]

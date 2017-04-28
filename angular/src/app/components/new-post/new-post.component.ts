@@ -4,6 +4,7 @@ import { PostService } from '../../services/post.service';
 import { AuthService } from '../../services/auth.service';
 import { ValidateService } from '../../services/validate.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-new-post',
@@ -15,6 +16,7 @@ export class NewPostComponent implements OnInit {
   title: String;
   body: String;
   url: String;
+  form: FormGroup;
 
   constructor(
     private postService: PostService,
@@ -25,6 +27,13 @@ export class NewPostComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.form = new FormGroup({
+       body: new FormControl()
+    });
+  }
+
+  updateContent(event) {
+    this.body = event;
   }
 
   onAddPostSubmit() {
