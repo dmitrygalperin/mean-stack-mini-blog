@@ -15,6 +15,11 @@ const UserSchema = mongoose.Schema({
   email: {
     type: String,
     required: true
+  },
+  admin: {
+    type: Boolean,
+    required: true,
+    default: false
   }
 });
 
@@ -34,7 +39,13 @@ module.exports.addUser = function(user, callback) {
     bcrypt.hash(user.password, salt, (err, hash) => {
       if(err) throw err;
       user.password = hash;
-      user.save(callback);
+      this.getUserCount((err, count) => {
+        if(err) throw err;
+        if(count == 0) {
+          user.admin = true;
+        }
+        user.save(callback);
+      });
     });
   });
 }
@@ -44,4 +55,8 @@ module.exports.comparePassword = function(candidatePassword, hash, callback) {
     if(err) throw err;
     callback(null, isMatch);
   });
+}
+
+module.exports.getUserCount = function(callback) {
+  User.count({}, callback)
 }

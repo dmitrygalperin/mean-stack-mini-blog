@@ -10,6 +10,11 @@ export class AuthService {
 
   constructor(private http: Http) { }
 
+  checkRegistrationOpen() {
+    return this.http.get('http://localhost:3000/users/allowregistration')
+      .map(res => res.json());
+  }
+
   registerUser(user) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');

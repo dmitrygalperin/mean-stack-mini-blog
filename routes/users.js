@@ -39,14 +39,14 @@ router.post('/authenticate', (req, res, next) => {
           expiresIn: 604800
         });
 
-        console.log(token);
         res.json({
           success: true,
           token: "JWT " + token,
           user: {
             id: user._id,
             username: user.username,
-            email: user.email
+            email: user.email,
+            admin: user.admin
           }
         });
       } else {
@@ -68,5 +68,15 @@ router.post('/verifylogin', (req, res, next) => {
     }
   });
 });
+
+router.get('/allowregistration', (req, res, next) => {
+  User.getUserCount((err, count) => {
+    if(count == 0) {
+      return res.json({success: true});
+    } else {
+      return res.json({success: false});
+    }
+  })
+})
 
 module.exports = router;

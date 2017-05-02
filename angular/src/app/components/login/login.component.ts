@@ -32,6 +32,9 @@ export class LoginComponent implements OnInit {
 
     this.authService.authenticateUser(user).subscribe(data => {
       if(data.success) {
+        if(!data.user.admin) {
+          return this.flashMessage.show('You are not an administrator', {cssClass: 'alert-danger', timeout: 5000});
+        }
         this.authService.storeUserData(data.token, data.user);
         this.flashMessage.show('You are now logged in', {cssClass: 'alert-success', timeout: 5000});
         this.router.navigate(['admin']);
